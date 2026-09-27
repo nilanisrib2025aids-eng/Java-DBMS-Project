@@ -46,6 +46,11 @@ public class AppRepository {
         return list.isEmpty() ? null : list.get(0);
     }
 
+    public Contact findContactByName(String name) {
+        List<Contact> list = jdbcTemplate.query("SELECT * FROM contacts WHERE LOWER(TRIM(name)) = LOWER(TRIM(?)) LIMIT 1", contactRowMapper, name);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
     public int saveContact(Contact contact) {
         String sql = "INSERT INTO contacts (name, contact_type, email, phone, address) VALUES (?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();

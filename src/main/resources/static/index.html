@@ -213,7 +213,7 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Citizen Name</label>
-                        <select class="form-select" id="citUserSelect" required></select>
+                        <input type="text" class="form-control" id="citUserName" placeholder="Enter your full name" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Department</label>
@@ -385,49 +385,9 @@
         </div>
     </div>
 
-    <!-- 6. REPORTS (Balance Sheet, P&L, Department Budget) -->
+    <!-- 6. REPORTS (Department Budget & SLA Compliance) -->
     <div id="page-reports" class="page-container">
         <div class="row">
-            <!-- Balance Sheet -->
-            <div class="col-md-6 mb-4">
-                <div class="content-box h-100">
-                    <h4>Municipal Balance Sheet</h4>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Treasury Bank Funds (Assets):</span>
-                        <strong class="text-success" id="repTotalAssets">₹0.00</strong>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Contractor Payables (Liabilities):</span>
-                        <strong class="text-danger" id="repTotalLiabilities">₹0.00</strong>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between">
-                        <strong>Net Municipal Balance:</strong>
-                        <strong class="text-primary" id="repNetEquity">₹0.00</strong>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Profit & Loss -->
-            <div class="col-md-6 mb-4">
-                <div class="content-box h-100">
-                    <h4>Profit & Loss Account</h4>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Civic Permit & Fee Revenue:</span>
-                        <strong class="text-success" id="repTotalIncome">₹0.00</strong>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>Civic Repair & Maintenance Outlay:</span>
-                        <strong class="text-danger" id="repTotalExpense">₹0.00</strong>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between">
-                        <strong>Net Civic Surplus / (Deficit):</strong>
-                        <strong class="text-primary" id="repNetSurplus">₹0.00</strong>
-                    </div>
-                </div>
-            </div>
-
             <!-- Department Budget Report -->
             <div class="col-12">
                 <div class="content-box">
@@ -487,20 +447,18 @@
         function formatDate(dStr) {
             if (!dStr) return '-';
             const d = new Date(dStr);
-            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return d.toLocaleDateString();
         }
 
         async function loadAllData() {
             try {
-                const [contacts, depts, prods, grievances, pos, bills, bs, pnl, budget] = await Promise.all([
+                const [contacts, depts, prods, grievances, pos, bills, budget] = await Promise.all([
                     fetch(`${API_BASE}/contacts`).then(r => r.json()),
                     fetch(`${API_BASE}/departments`).then(r => r.json()),
                     fetch(`${API_BASE}/products`).then(r => r.json()),
                     fetch(`${API_BASE}/grievances`).then(r => r.json()),
                     fetch(`${API_BASE}/purchase-orders`).then(r => r.json()),
                     fetch(`${API_BASE}/vendor-bills`).then(r => r.json()),
-                    fetch(`${API_BASE}/reports/balance-sheet`).then(r => r.json()),
-                    fetch(`${API_BASE}/reports/profit-and-loss`).then(r => r.json()),
                     fetch(`${API_BASE}/reports/budget`).then(r => r.json())
                 ]);
 
@@ -515,15 +473,14 @@
                 renderOfficerTable(grievances);
                 renderPOTable(pos);
                 renderBillsTable(bills);
-                renderReports(bs, pnl, budget);
+                renderReports(budget);
             } catch (err) {
                 console.error("Error loading data:", err);
             }
         }
 
         function populateDropdowns() {
-            // Citizen Form
-            document.getElementById('citUserSelect').innerHTML = cachedCitizens.map(c => `<option value="${c.id}">${c.name} (${c.phone || c.email})</option>`).join('');
+            // Citizen Form - Department and Product
             document.getElementById('citDeptSelect').innerHTML = cachedDepartments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
             document.getElementById('citProductSelect').innerHTML = '<option value="">-- General / Common --</option>' + cachedProducts.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
 
@@ -628,15 +585,7 @@
             `).join('');
         }
 
-        function renderReports(bs, pnl, budget) {
-            document.getElementById('repTotalAssets').innerText = formatINR(bs.totalAssets);
-            document.getElementById('repTotalLiabilities').innerText = formatINR(bs.totalLiabilities);
-            document.getElementById('repNetEquity').innerText = formatINR(bs.netMunicipalEquity);
-
-            document.getElementById('repTotalIncome').innerText = formatINR(pnl.totalIncome);
-            document.getElementById('repTotalExpense').innerText = formatINR(pnl.totalExpenses);
-            document.getElementById('repNetSurplus').innerText = formatINR(pnl.netSurplusOrDeficit);
-
+        function renderReports(budget) {
             document.getElementById('deptBudgetBody').innerHTML = budget.map(b => `
                 <tr>
                     <td><strong>${b.departmentName}</strong></td>
@@ -653,8 +602,9 @@
         // Form Submissions & Actions
         document.getElementById('citizenForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const citizenNameVal = document.getElementById('citUserName').value.trim();
             const payload = {
-                citizenId: parseInt(document.getElementById('citUserSelect').value),
+                citizenName: citizenNameVal,
                 departmentId: parseInt(document.getElementById('citDeptSelect').value),
                 productId: document.getElementById('citProductSelect').value ? parseInt(document.getElementById('citProductSelect').value) : null,
                 location: document.getElementById('citLocation').value,

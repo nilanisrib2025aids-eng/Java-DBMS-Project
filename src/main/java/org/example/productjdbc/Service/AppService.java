@@ -42,7 +42,26 @@ public class AppService {
     // =========================================================================
     public List<Grievance> getAllGrievances() { return repository.findAllGrievances(); }
     public Grievance getGrievanceById(int id) { return repository.findGrievanceById(id); }
-    public int lodgeGrievance(Grievance grievance) { return repository.saveGrievance(grievance); }
+    public int lodgeGrievance(Grievance grievance) {
+        if (grievance.getCitizenId() == null || grievance.getCitizenId() == 0) {
+            String citizenName = grievance.getCitizenName();
+            if (citizenName == null || citizenName.trim().isEmpty()) {
+                citizenName = "Citizen";
+            }
+            Contact existing = repository.findContactByName(citizenName.trim());
+            if (existing != null) {
+                grievance.setCitizenId(existing.getId());
+            } else {
+                Contact newCit = new Contact();
+                newCit.setName(citizenName.trim());
+                newCit.setContactType("CITIZEN");
+                newCit.setAddress(grievance.getLocation());
+                int newId = repository.saveContact(newCit);
+                grievance.setCitizenId(newId);
+            }
+        }
+        return repository.saveGrievance(grievance);
+    }
     public void updateGrievanceStatus(int id, String status, String notes) {
         repository.updateGrievanceStatus(id, status, notes);
     }
