@@ -3,583 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Governance Grievance Redressal & Escalation Workflow</title>
+    <title>E-Governance Grievance System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root {
-            --primary-navy: #1b2a4a;
-            --accent-blue: #0d6efd;
-            --sidebar-width: 270px;
-        }
         body {
-            background-color: #f4f6fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+            background-color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #334155;
+            margin: 0;
+            padding: 0;
         }
-        .sidebar {
-            width: var(--sidebar-width);
-            background: #111e38;
-            color: #ecf0f1;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            overflow-y: auto;
-            z-index: 1000;
-            padding: 20px 0;
+
+        /* Top Blue Navbar */
+        .navbar-custom {
+            background-color: #1a426d;
+            padding: 14px 40px;
         }
-        .sidebar .brand {
-            padding: 0 20px 20px;
-            border-bottom: 1px solid #233554;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #58a6ff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .sidebar .nav-link {
-            color: #cbd5e1;
-            padding: 12px 24px;
-            font-size: 0.93rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.2s;
-            cursor: pointer;
-            border-left: 4px solid transparent;
-        }
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
-            background-color: #1e335b;
+        .navbar-custom .navbar-brand {
             color: #ffffff;
-            border-left-color: #38bdf8;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.2px;
         }
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 25px 35px;
-            min-height: 100vh;
+        .navbar-custom .nav-link {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.2s;
         }
-        .stat-card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        .stat-card:hover {
-            transform: translateY(-3px);
-        }
-        .badge-sla {
-            animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(220, 53, 69, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
-        }
-        .table thead {
-            background-color: #e2e8f0;
-            color: #1e293b;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-        }
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            margin-bottom: 25px;
-        }
-        .card-header {
-            background-color: #ffffff;
-            border-bottom: 1px solid #eef2f6;
+        .navbar-custom .nav-link:hover, .navbar-custom .nav-link.active {
+            color: #ffffff;
             font-weight: 600;
-            font-size: 1.05rem;
-            padding: 15px 20px;
         }
-        .section-view {
+
+        /* Landing Hero Section */
+        .hero-section {
+            padding: 70px 20px 40px;
+            text-align: center;
+        }
+        .hero-title {
+            color: #1a426d;
+            font-weight: 800;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        .hero-subtitle {
+            color: #64748b;
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+        }
+
+        /* Action Buttons */
+        .btn-citizen {
+            background-color: #1a426d;
+            color: #ffffff;
+            padding: 10px 24px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            margin: 0 8px;
+        }
+        .btn-citizen:hover {
+            background-color: #133253;
+            color: #ffffff;
+        }
+
+        .btn-officer {
+            background-color: #198754;
+            color: #ffffff;
+            padding: 10px 24px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            margin: 0 8px;
+        }
+        .btn-officer:hover {
+            background-color: #146c43;
+            color: #ffffff;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: #ffffff;
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            padding: 30px 24px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            height: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .feature-card h5 {
+            color: #1a426d;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .feature-card p {
+            color: #64748b;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Page containers */
+        .page-container {
+            max-width: 1050px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: none;
         }
-        .section-view.active-view {
+        .page-container.active-page {
             display: block;
+        }
+
+        /* Form and Table Card Style */
+        .content-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin-bottom: 25px;
+        }
+        .content-box h4 {
+            color: #1a426d;
+            font-weight: 700;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .badge-escalated {
+            background-color: #dc3545;
+            color: white;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .badge-normal {
+            background-color: #198754;
+            color: white;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
 
-<!-- SIDEBAR NAVIGATION -->
-<div class="sidebar">
-    <div class="brand">
-        <i class="fa-solid fa-landmark-flag fa-lg"></i>
-        <span>CIVIC WORKFLOW ERP</span>
-    </div>
-    <div class="mt-3">
-        <a class="nav-link active" onclick="showSection('dashboard')">
-            <i class="fa-solid fa-gauge-high"></i> Dashboard & SLA
-        </a>
-        <a class="nav-link" onclick="showSection('grievances')">
-            <i class="fa-solid fa-bullhorn"></i> Grievances & Redressal
-        </a>
-        <a class="nav-link" onclick="showSection('purchase-orders')">
-            <i class="fa-solid fa-file-signature"></i> Repair POs (Work Orders)
-        </a>
-        <a class="nav-link" onclick="showSection('vendor-bills')">
-            <i class="fa-solid fa-file-invoice-dollar"></i> Vendor Bills & Bank Pay
-        </a>
-        <a class="nav-link" onclick="showSection('invoices')">
-            <i class="fa-solid fa-receipt"></i> Civic Permits & Invoices
-        </a>
-        <a class="nav-link" onclick="showSection('ledger')">
-            <i class="fa-solid fa-book-journal-whills"></i> General & Fines Ledger
-        </a>
-        <a class="nav-link" onclick="showSection('financial-reports')">
-            <i class="fa-solid fa-chart-pie"></i> Balance Sheet & P&L
-        </a>
-        <a class="nav-link" onclick="showSection('budget-reports')">
-            <i class="fa-solid fa-sack-dollar"></i> Departmental Budgets
-        </a>
-        <a class="nav-link" onclick="showSection('masters')">
-            <i class="fa-solid fa-database"></i> Master Configurations
-        </a>
-    </div>
-</div>
-
-<!-- MAIN CONTENT AREA -->
-<div class="main-content">
-
-    <!-- TOP BAR -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h3 class="fw-bold mb-0 text-dark" id="pageTitle">Dashboard & Real-Time Redressal Overview</h3>
-            <span class="text-muted small">Municipal Commissioner & Department Accountant Portal</span>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand" onclick="navigateTo('home')">E-Governance Grievance System</a>
+            <div class="ms-auto d-flex align-items-center">
+                <a class="nav-link active" id="nav-home" onclick="navigateTo('home')">Home</a>
+                <a class="nav-link" id="nav-citizen" onclick="navigateTo('citizen')">Citizen</a>
+                <a class="nav-link" id="nav-officer" onclick="navigateTo('officer')">Officer</a>
+                <a class="nav-link" id="nav-accountant" onclick="navigateTo('accountant')">Accountant & PO</a>
+                <a class="nav-link" id="nav-reports" onclick="navigateTo('reports')">Reports</a>
+            </div>
         </div>
-        <div class="d-flex gap-2">
-            <button class="btn btn-outline-danger btn-sm shadow-sm" onclick="triggerSlaEngine()">
-                <i class="fa-solid fa-clock-rotate-left"></i> Run 72-Hour SLA Checker
-            </button>
-            <button class="btn btn-primary btn-sm shadow-sm" data-bs-toggle="modal" data-bs-target="#newGrievanceModal">
-                <i class="fa-solid fa-plus-circle"></i> Lodge Citizen Grievance
-            </button>
-        </div>
-    </div>
+    </nav>
 
-    <!-- 1. DASHBOARD OVERVIEW -->
-    <div id="dashboard" class="section-view active-view">
-        <div class="row g-3 mb-4">
-            <div class="col-md-3">
-                <div class="card stat-card bg-white p-3 border-start border-4 border-primary">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="text-muted small fw-semibold">TOTAL GRIEVANCES</span>
-                            <h3 class="fw-bold mt-1 mb-0" id="dashTotalGrievances">0</h3>
-                        </div>
-                        <div class="bg-primary-subtle text-primary p-3 rounded-circle"><i class="fa-solid fa-ticket fa-lg"></i></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card stat-card bg-white p-3 border-start border-4 border-danger">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="text-danger small fw-semibold">72H SLA ESCALATED</span>
-                            <h3 class="fw-bold text-danger mt-1 mb-0" id="dashEscalatedGrievances">0</h3>
-                        </div>
-                        <div class="bg-danger-subtle text-danger p-3 rounded-circle"><i class="fa-solid fa-triangle-exclamation fa-lg"></i></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card stat-card bg-white p-3 border-start border-4 border-success">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="text-muted small fw-semibold">TREASURY BANK BALANCE</span>
-                            <h3 class="fw-bold text-success mt-1 mb-0" id="dashTreasuryBalance">₹0</h3>
-                        </div>
-                        <div class="bg-success-subtle text-success p-3 rounded-circle"><i class="fa-solid fa-building-columns fa-lg"></i></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card stat-card bg-white p-3 border-start border-4 border-warning">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="text-muted small fw-semibold">CONTRACTOR PAYABLES</span>
-                            <h3 class="fw-bold text-warning mt-1 mb-0" id="dashContractorPayables">₹0</h3>
-                        </div>
-                        <div class="bg-warning-subtle text-warning p-3 rounded-circle"><i class="fa-solid fa-hand-holding-dollar fa-lg"></i></div>
-                    </div>
-                </div>
+    <!-- 1. HOME / LANDING VIEW (Exactly like your design) -->
+    <div id="page-home" class="page-container active-page">
+        <div class="hero-section">
+            <h1 class="hero-title">Welcome to E-Governance</h1>
+            <p class="hero-subtitle">Submit, track and manage public grievances through a simple digital platform.</p>
+            <div>
+                <button class="btn btn-citizen" onclick="navigateTo('citizen')">Citizen Portal</button>
+                <button class="btn btn-officer" onclick="navigateTo('officer')">Officer Portal</button>
             </div>
         </div>
 
-        <!-- RECENT ESCALATED & ACTIVE GRIEVANCES -->
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-bolt text-danger me-2"></i>Active Grievances & 72-Hour SLA Status Monitor</span>
-                <span class="badge bg-secondary" id="slaStatusNotice">Auto-escalation active</span>
+        <div class="row g-4 mt-2 justify-content-center">
+            <div class="col-md-4">
+                <div class="feature-card" onclick="navigateTo('citizen')">
+                    <h5>Submit Grievance</h5>
+                    <p>Citizens can submit complaints related to public services like roads, water and sanitation.</p>
+                </div>
             </div>
-            <div class="card-body p-0 table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
+            <div class="col-md-4">
+                <div class="feature-card" onclick="navigateTo('track')">
+                    <h5>Track Status</h5>
+                    <p>Track your grievance resolution status, 72-hour SLA deadline, and officer updates in real time.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card" onclick="navigateTo('officer')">
+                    <h5>Officer Management</h5>
+                    <p>Officers can view complaints, update resolution status, and monitor automatic 72-hour SLA escalations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. CITIZEN PORTAL (Submit Grievance) -->
+    <div id="page-citizen" class="page-container">
+        <div class="content-box">
+            <h4>Submit a New Grievance</h4>
+            <p class="text-muted small">Fill out the details below. Once lodged, a 72-hour SLA resolution window begins.</p>
+            <form id="citizenForm">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Citizen Name</label>
+                        <select class="form-select" id="citUserSelect" required></select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Department</label>
+                        <select class="form-select" id="citDeptSelect" required></select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Grievance Category / Work</label>
+                        <select class="form-select" id="citProductSelect"></select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Location / Address</label>
+                        <input type="text" class="form-control" id="citLocation" placeholder="e.g. Cross Cut Road, Ward 10" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Grievance Title</label>
+                        <input type="text" class="form-control" id="citTitle" placeholder="e.g. Potholes on main road" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Detailed Description</label>
+                        <textarea class="form-control" id="citDesc" rows="3" placeholder="Describe the problem..."></textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-citizen">Submit Grievance</button>
+                        <button type="button" class="btn btn-outline-secondary ms-2" onclick="navigateTo('track')">Track Existing Complaints</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. TRACK STATUS VIEW -->
+    <div id="page-track" class="page-container">
+        <div class="content-box">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0 border-0 p-0">Track Grievance Status</h4>
+                <button class="btn btn-sm btn-outline-primary" onclick="loadAllData()">Refresh</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
                         <tr>
-                            <th>Ticket</th>
+                            <th>Ticket #</th>
                             <th>Citizen</th>
                             <th>Department</th>
-                            <th>Title / Issue</th>
-                            <th>Created On</th>
-                            <th>72-Hr SLA Deadline</th>
+                            <th>Title & Location</th>
+                            <th>Submitted On</th>
+                            <th>72h SLA Deadline</th>
+                            <th>Status</th>
+                            <th>SLA Escalation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trackTableBody">
+                        <tr><td colspan="8" class="text-center py-3 text-muted">Loading grievances...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. OFFICER PORTAL (Review & Resolve) -->
+    <div id="page-officer" class="page-container">
+        <div class="content-box">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0 border-0 p-0">Officer Grievance Redressal Portal</h4>
+                <div>
+                    <button class="btn btn-sm btn-danger me-2" onclick="runSlaCheck()">Trigger SLA Check</button>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="loadAllData()">Refresh</button>
+                </div>
+            </div>
+            <p class="text-muted small">Complaints not redressed within 72 hours are automatically flagged as <strong>ESCALATED</strong>.</p>
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Ticket</th>
+                            <th>Department</th>
+                            <th>Grievance Summary</th>
+                            <th>SLA Deadline</th>
                             <th>Status</th>
                             <th>Escalation</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="dashGrievanceTable">
-                        <tr><td colspan="9" class="text-center py-4 text-muted">Loading grievances...</td></tr>
+                    <tbody id="officerTableBody">
+                        <!-- Populated by JS -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- 2. GRIEVANCES SECTION -->
-    <div id="grievances" class="section-view">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-bullhorn text-primary me-2"></i>Citizen Grievance Management</span>
-                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newGrievanceModal">
-                    <i class="fa-solid fa-plus"></i> Lodge New Grievance
-                </button>
+    <!-- 5. ACCOUNTANT PORTAL (Repair Purchase Orders, Bills & Payments) -->
+    <div id="page-accountant" class="page-container">
+        <div class="content-box">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0 border-0 p-0">Repair Purchase Orders (Contractor Work Orders)</h4>
+                <button class="btn btn-sm btn-primary" data-bs-toggle="collapse" data-bs-target="#createPOCollapse">+ New Purchase Order</button>
             </div>
-            <div class="card-body p-0 table-responsive">
-                <table class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th>Ticket #</th>
-                            <th>Citizen</th>
-                            <th>Department</th>
-                            <th>Product/Work Category</th>
-                            <th>Issue & Location</th>
-                            <th>SLA Deadline</th>
-                            <th>Status</th>
-                            <th>Escalation</th>
-                            <th>Redressal Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="allGrievancesTable">
-                        <!-- populated dynamically -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
-    <!-- 3. REPAIR PURCHASE ORDERS SECTION -->
-    <div id="purchase-orders" class="section-view">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-file-contract text-primary me-2"></i>Contractor Repair Work Purchase Orders</span>
-                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newPOModal">
-                    <i class="fa-solid fa-plus"></i> Issue New Repair PO
-                </button>
+            <!-- Create PO Form Collapse -->
+            <div class="collapse mb-4" id="createPOCollapse">
+                <div class="p-3 bg-light rounded border">
+                    <form id="poCreateForm">
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <label class="form-label small fw-semibold">Grievance Ticket</label>
+                                <select class="form-select form-select-sm" id="poTicketSelect"></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label small fw-semibold">Contractor</label>
+                                <select class="form-select form-select-sm" id="poContractorSelect" required></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-semibold">Department</label>
+                                <select class="form-select form-select-sm" id="poDeptSelect" required></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-semibold">Work Item</label>
+                                <select class="form-select form-select-sm" id="poItemSelect"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small fw-semibold">Amount (₹)</label>
+                                <input type="number" step="0.01" class="form-control form-select-sm" id="poAmount" required>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <button type="submit" class="btn btn-sm btn-success">Issue PO</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="card-body p-0 table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
                         <tr>
                             <th>PO #</th>
-                            <th>Grievance Ref</th>
-                            <th>Civil Contractor</th>
+                            <th>Ticket</th>
+                            <th>Contractor</th>
                             <th>Department</th>
-                            <th>Repair Work Item</th>
-                            <th>Estimated Outlay</th>
+                            <th>Amount</th>
                             <th>Status</th>
-                            <th>Workflow Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="allPOTable">
-                        <!-- dynamic -->
-                    </tbody>
+                    <tbody id="poTableBody"></tbody>
                 </table>
             </div>
         </div>
-    </div>
 
-    <!-- 4. VENDOR BILLS SECTION -->
-    <div id="vendor-bills" class="section-view">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-file-invoice-dollar text-primary me-2"></i>Repair Contractor Bills & Disbursements</span>
-            </div>
-            <div class="card-body p-0 table-responsive">
-                <table class="table table-striped mb-0">
-                    <thead>
+        <!-- Vendor Bills & Payments -->
+        <div class="content-box">
+            <h4>Vendor Bills & Bank Disbursements</h4>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
                         <tr>
                             <th>Bill #</th>
                             <th>PO Ref</th>
                             <th>Contractor</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th>Created Date</th>
-                            <th>Accountant Action</th>
+                            <th>Payment Action</th>
                         </tr>
                     </thead>
-                    <tbody id="allBillsTable">
-                        <!-- dynamic -->
-                    </tbody>
+                    <tbody id="billsTableBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- 5. CIVIC INVOICES / PERMIT FEES -->
-    <div id="invoices" class="section-view">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-receipt text-primary me-2"></i>Civic Permits, Service Orders & Fines</span>
-                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newInvoiceModal">
-                    <i class="fa-solid fa-plus"></i> Issue Civic Fee Order
-                </button>
-            </div>
-            <div class="card-body p-0 table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th>Invoice #</th>
-                            <th>Citizen</th>
-                            <th>Department</th>
-                            <th>Permit / Service Type</th>
-                            <th>Fee Amount</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="allInvoicesTable">
-                        <!-- dynamic -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- 6. GENERAL & JOURNAL ENTRIES LEDGER -->
-    <div id="ledger" class="section-view">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span><i class="fa-solid fa-book text-primary me-2"></i>Double-Entry Expenditure & Revenue Postings</span>
-                <span class="text-muted small">System Real-time Postings</span>
-            </div>
-            <div class="card-body p-0 table-responsive">
-                <table class="table table-sm table-bordered mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Date</th>
-                            <th>Entry #</th>
-                            <th>Journal</th>
-                            <th>Account Code & Title</th>
-                            <th>Debit (₹)</th>
-                            <th>Credit (₹)</th>
-                            <th>Ref</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody id="journalEntriesTable">
-                        <!-- dynamic -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- 7. FINANCIAL REPORTS: BALANCE SHEET & P&L -->
-    <div id="financial-reports" class="section-view">
+    <!-- 6. REPORTS (Balance Sheet, P&L, Department Budget) -->
+    <div id="page-reports" class="page-container">
         <div class="row">
             <!-- Balance Sheet -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <h5 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-scale-balanced me-2"></i>Municipal Balance Sheet</h5>
-                        <small class="text-muted">Real-time snapshot of Municipal Funds vs. Contractor Liabilities</small>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="fw-bold text-dark border-bottom pb-2">ASSETS</h6>
-                        <div id="bsAssetsList" class="mb-3"></div>
-                        <div class="d-flex justify-content-between fw-bold text-success border-top pt-2">
-                            <span>Total Assets:</span>
-                            <span id="bsTotalAssets">₹0.00</span>
-                        </div>
-
-                        <h6 class="fw-bold text-dark border-bottom pb-2 mt-4">LIABILITIES</h6>
-                        <div id="bsLiabilitiesList" class="mb-3"></div>
-                        <div class="d-flex justify-content-between fw-bold text-danger border-top pt-2">
-                            <span>Total Liabilities:</span>
-                            <span id="bsTotalLiabilities">₹0.00</span>
-                        </div>
-
-                        <div class="bg-light p-3 rounded mt-4 d-flex justify-content-between align-items-center border">
-                            <span class="fw-bold">Net Municipal Equity:</span>
-                            <h5 class="fw-bold text-primary mb-0" id="bsNetEquity">₹0.00</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Profit & Loss Account -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <h5 class="fw-bold mb-0 text-success"><i class="fa-solid fa-file-invoice me-2"></i>Civic Profit & Loss Account</h5>
-                        <small class="text-muted">Civic Permit Income minus Departmental Repair Expenditures</small>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="fw-bold text-success border-bottom pb-2">INCOME / REVENUE</h6>
-                        <div id="pnlIncomeList" class="mb-3"></div>
-                        <div class="d-flex justify-content-between fw-bold text-success border-top pt-2">
-                            <span>Total Civic Revenue:</span>
-                            <span id="pnlTotalIncome">₹0.00</span>
-                        </div>
-
-                        <h6 class="fw-bold text-danger border-bottom pb-2 mt-4">CIVIC REPAIR EXPENDITURE</h6>
-                        <div id="pnlExpenseList" class="mb-3"></div>
-                        <div class="d-flex justify-content-between fw-bold text-danger border-top pt-2">
-                            <span>Total Maintenance Expenses:</span>
-                            <span id="pnlTotalExpenses">₹0.00</span>
-                        </div>
-
-                        <div class="bg-light p-3 rounded mt-4 d-flex justify-content-between align-items-center border">
-                            <span class="fw-bold">Net Municipal Surplus / (Deficit):</span>
-                            <h5 class="fw-bold text-primary mb-0" id="pnlNetSurplus">₹0.00</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 8. DEPARTMENTAL BUDGET CONSUMPTION & SLA REPORT -->
-    <div id="budget-reports" class="section-view">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="fw-bold mb-0 text-primary"><i class="fa-solid fa-chart-column me-2"></i>Departmental SLA Compliance & Budget Consumption Report</h5>
-                <small class="text-muted">Allocated annual civic repair budgets against actual vendor outlays and SLA compliance</small>
-            </div>
-            <div class="card-body p-0 table-responsive">
-                <table class="table table-hover mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Department Code & Name</th>
-                            <th>Head Officer</th>
-                            <th>Allocated Budget</th>
-                            <th>Actual Spent</th>
-                            <th>Remaining Funds</th>
-                            <th>Budget Utilization</th>
-                            <th>Total Grievances</th>
-                            <th>Resolved</th>
-                            <th>Escalated</th>
-                        </tr>
-                    </thead>
-                    <tbody id="budgetReportTable">
-                        <!-- dynamic -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- 9. MASTER DATA CONFIGURATIONS -->
-    <div id="masters" class="section-view">
-        <div class="row">
-            <!-- Citizen/Contractor Masters -->
             <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="fa-solid fa-address-book me-2"></i>Contact Master (Citizen, Contractor, Utility)</span>
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newContactModal">
-                            <i class="fa-solid fa-plus"></i> Add Contact
-                        </button>
+                <div class="content-box h-100">
+                    <h4>Municipal Balance Sheet</h4>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Treasury Bank Funds (Assets):</span>
+                        <strong class="text-success" id="repTotalAssets">₹0.00</strong>
                     </div>
-                    <div class="card-body p-0 table-responsive" style="max-height: 350px;">
-                        <table class="table table-sm mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Contact</th>
-                                    <th>Address</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contactMasterTable"></tbody>
-                        </table>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Contractor Payables (Liabilities):</span>
+                        <strong class="text-danger" id="repTotalLiabilities">₹0.00</strong>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Net Municipal Balance:</strong>
+                        <strong class="text-primary" id="repNetEquity">₹0.00</strong>
                     </div>
                 </div>
             </div>
 
-            <!-- Product / Service Master -->
+            <!-- Profit & Loss -->
             <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="fa-solid fa-wrench me-2"></i>Product Master (Services & Goods)</span>
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newProductModal">
-                            <i class="fa-solid fa-plus"></i> Add Product/Work
-                        </button>
+                <div class="content-box h-100">
+                    <h4>Profit & Loss Account</h4>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Civic Permit & Fee Revenue:</span>
+                        <strong class="text-success" id="repTotalIncome">₹0.00</strong>
                     </div>
-                    <div class="card-body p-0 table-responsive" style="max-height: 350px;">
-                        <table class="table table-sm mb-0">
-                            <thead>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Civic Repair & Maintenance Outlay:</span>
+                        <strong class="text-danger" id="repTotalExpense">₹0.00</strong>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <strong>Net Civic Surplus / (Deficit):</strong>
+                        <strong class="text-primary" id="repNetSurplus">₹0.00</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Department Budget Report -->
+            <div class="col-12">
+                <div class="content-box">
+                    <h4>Department Budgets & SLA Compliance</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Standard Rate</th>
                                     <th>Department</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productMasterTable"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chart of Accounts Master -->
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <span><i class="fa-solid fa-coins me-2"></i>Chart of Accounts (CoA) Master</span>
-                    </div>
-                    <div class="card-body p-0 table-responsive">
-                        <table class="table table-sm mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Account Name</th>
-                                    <th>Type</th>
-                                    <th>Current Balance</th>
-                                </tr>
-                            </thead>
-                            <tbody id="coaMasterTable"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Department Master -->
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <span><i class="fa-solid fa-sitemap me-2"></i>Analytic Department Master</span>
-                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newDeptModal">
-                            <i class="fa-solid fa-plus"></i> Add Department
-                        </button>
-                    </div>
-                    <div class="card-body p-0 table-responsive">
-                        <table class="table table-sm mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Department Name</th>
                                     <th>Head Officer</th>
                                     <th>Allocated Budget</th>
+                                    <th>Spent (POs)</th>
+                                    <th>Remaining</th>
+                                    <th>Utilization</th>
+                                    <th>Grievances (Resolved/Escalated)</th>
                                 </tr>
                             </thead>
-                            <tbody id="deptMasterTable"></tbody>
+                            <tbody id="deptBudgetBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -587,847 +453,279 @@
         </div>
     </div>
 
-</div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_BASE = '/api';
 
-<!-- ======================================================================= -->
-<!-- MODALS -->
-<!-- ======================================================================= -->
+        let cachedCitizens = [];
+        let cachedContractors = [];
+        let cachedDepartments = [];
+        let cachedProducts = [];
+        let cachedGrievances = [];
 
-<!-- 1. Lodge Grievance Modal -->
-<div class="modal fade" id="newGrievanceModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Lodge Citizen Civic Grievance</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="grievanceForm">
-                    <div class="mb-3">
-                        <label class="form-label">Citizen</label>
-                        <select class="form-select" id="grvCitizenSelect" required></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Target Department</label>
-                        <select class="form-select" id="grvDeptSelect" required></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Work / Service Category</label>
-                        <select class="form-select" id="grvProductSelect"></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Title / Problem Brief</label>
-                        <input type="text" class="form-control" id="grvTitle" placeholder="e.g. Major Water Pipe Leakage" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Location / Landmark</label>
-                        <input type="text" class="form-control" id="grvLocation" placeholder="e.g. 5th Cross Road, Ward 12" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Detailed Description</label>
-                        <textarea class="form-control" id="grvDesc" rows="3" placeholder="Provide complete grievance details..."></textarea>
-                    </div>
-                    <div class="alert alert-info py-2 small">
-                        <i class="fa-solid fa-clock me-1"></i> Submitting this initiates a strict <strong>72-Hour SLA Window</strong>.
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Submit Grievance</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+        // Simple Tab Navigation
+        function navigateTo(page) {
+            document.querySelectorAll('.page-container').forEach(p => p.classList.remove('active-page'));
+            document.querySelectorAll('.navbar-custom .nav-link').forEach(l => l.classList.remove('active'));
 
-<!-- 2. Create Repair PO Modal -->
-<div class="modal fade" id="newPOModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Issue Contractor Repair Purchase Order</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="poForm">
-                    <div class="mb-3">
-                        <label class="form-label">Grievance Ticket Reference</label>
-                        <select class="form-select" id="poGrievanceSelect"></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Civil Works Contractor</label>
-                        <select class="form-select" id="poContractorSelect" required></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Responsible Department</label>
-                        <select class="form-select" id="poDeptSelect" required></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Repair Service / Product</label>
-                        <select class="form-select" id="poProductSelect" onchange="autoFillRate()"></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Outlay Amount (₹)</label>
-                        <input type="number" step="0.01" class="form-control" id="poAmount" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Issue Purchase Order</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+            const targetPage = document.getElementById('page-' + page);
+            if (targetPage) targetPage.classList.add('active-page');
 
-<!-- 3. Create Permit / Service Invoice Modal -->
-<div class="modal fade" id="newInvoiceModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Issue Civic Fee / Permit Order</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="invoiceForm">
-                    <div class="mb-3">
-                        <label class="form-label">Citizen</label>
-                        <select class="form-select" id="invCitizenSelect" required></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department</label>
-                        <select class="form-select" id="invDeptSelect" required></select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Fee / Permit Type</label>
-                        <input type="text" class="form-control" id="invFeeType" placeholder="e.g. Municipal Road Cut Permit Fee" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Amount (₹)</label>
-                        <input type="number" step="0.01" class="form-control" id="invAmount" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Generate Invoice</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+            const navLink = document.getElementById('nav-' + page);
+            if (navLink) navLink.classList.add('active');
 
-<!-- 4. Add Contact Modal -->
-<div class="modal fade" id="newContactModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Register Contact Master</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="contactForm">
-                    <div class="mb-3">
-                        <label class="form-label">Full Name / Organization</label>
-                        <input type="text" class="form-control" id="cntName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Contact Type</label>
-                        <select class="form-select" id="cntType" required>
-                            <option value="CITIZEN">Citizen</option>
-                            <option value="CONTRACTOR">Civil Works Contractor (Vendor)</option>
-                            <option value="UTILITY">Municipal Utility (Vendor)</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="cntEmail">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="cntPhone">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Address</label>
-                        <input type="text" class="form-control" id="cntAddress">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Save Contact</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+            if (page === 'track' || page === 'officer' || page === 'accountant' || page === 'reports') {
+                loadAllData();
+            }
+        }
 
-<!-- 5. Add Product Modal -->
-<div class="modal fade" id="newProductModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Add Service / Product Master</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="productForm">
-                    <div class="mb-3">
-                        <label class="form-label">Item / Service Name</label>
-                        <input type="text" class="form-control" id="prodName" placeholder="e.g. Pipeline Trench Restoration" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Product Type</label>
-                        <select class="form-select" id="prodType" required>
-                            <option value="SERVICE">Service (Repair Work)</option>
-                            <option value="GOODS">Goods / Hardware</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Standard Rate (₹)</label>
-                        <input type="number" step="0.01" class="form-control" id="prodRate" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department</label>
-                        <select class="form-select" id="prodDeptSelect"></select>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Save Product</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+        function formatINR(val) {
+            return '₹' + Number(val || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 });
+        }
 
-<!-- 6. Add Department Modal -->
-<div class="modal fade" id="newDeptModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Configure Department (Analytic Account)</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="deptForm">
-                    <div class="mb-3">
-                        <label class="form-label">Department Name</label>
-                        <input type="text" class="form-control" id="deptName" placeholder="e.g. Storm Water Drainage Dept" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Department Code</label>
-                        <input type="text" class="form-control" id="deptCode" placeholder="e.g. SWD-01" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Head Officer</label>
-                        <input type="text" class="form-control" id="deptHead" placeholder="Officer In-Charge">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Allocated Annual Budget (₹)</label>
-                        <input type="number" step="0.01" class="form-control" id="deptBudget" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Create Department</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+        function formatDate(dStr) {
+            if (!dStr) return '-';
+            const d = new Date(dStr);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    const API_BASE = '/api';
+        async function loadAllData() {
+            try {
+                const [contacts, depts, prods, grievances, pos, bills, bs, pnl, budget] = await Promise.all([
+                    fetch(`${API_BASE}/contacts`).then(r => r.json()),
+                    fetch(`${API_BASE}/departments`).then(r => r.json()),
+                    fetch(`${API_BASE}/products`).then(r => r.json()),
+                    fetch(`${API_BASE}/grievances`).then(r => r.json()),
+                    fetch(`${API_BASE}/purchase-orders`).then(r => r.json()),
+                    fetch(`${API_BASE}/vendor-bills`).then(r => r.json()),
+                    fetch(`${API_BASE}/reports/balance-sheet`).then(r => r.json()),
+                    fetch(`${API_BASE}/reports/profit-and-loss`).then(r => r.json()),
+                    fetch(`${API_BASE}/reports/budget`).then(r => r.json())
+                ]);
 
-    // Global state caches
-    let cachedCitizens = [];
-    let cachedContractors = [];
-    let cachedDepartments = [];
-    let cachedProducts = [];
-    let cachedGrievances = [];
+                cachedCitizens = contacts.filter(c => c.contactType === 'CITIZEN');
+                cachedContractors = contacts.filter(c => c.contactType === 'CONTRACTOR' || c.contactType === 'UTILITY');
+                cachedDepartments = depts;
+                cachedProducts = prods;
+                cachedGrievances = grievances;
 
-    // Switch section tabs
-    function showSection(sectionId) {
-        document.querySelectorAll('.section-view').forEach(s => s.classList.remove('active-view'));
-        document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+                populateDropdowns();
+                renderTrackTable(grievances);
+                renderOfficerTable(grievances);
+                renderPOTable(pos);
+                renderBillsTable(bills);
+                renderReports(bs, pnl, budget);
+            } catch (err) {
+                console.error("Error loading data:", err);
+            }
+        }
 
-        const target = document.getElementById(sectionId);
-        if (target) target.classList.add('active-view');
+        function populateDropdowns() {
+            // Citizen Form
+            document.getElementById('citUserSelect').innerHTML = cachedCitizens.map(c => `<option value="${c.id}">${c.name} (${c.phone || c.email})</option>`).join('');
+            document.getElementById('citDeptSelect').innerHTML = cachedDepartments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            document.getElementById('citProductSelect').innerHTML = '<option value="">-- General / Common --</option>' + cachedProducts.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
 
-        const activeLink = Array.from(document.querySelectorAll('.sidebar .nav-link'))
-            .find(link => link.getAttribute('onclick') && link.getAttribute('onclick').includes(sectionId));
-        if (activeLink) activeLink.classList.add('active');
+            // PO Form
+            document.getElementById('poTicketSelect').innerHTML = '<option value="">-- Optional Grievance Ticket --</option>' + cachedGrievances.map(g => `<option value="${g.id}">[${g.ticketNumber}] ${g.title}</option>`).join('');
+            document.getElementById('poContractorSelect').innerHTML = cachedContractors.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            document.getElementById('poDeptSelect').innerHTML = cachedDepartments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            document.getElementById('poItemSelect').innerHTML = cachedProducts.map(p => `<option value="${p.id}" data-rate="${p.standardRate}">${p.name}</option>`).join('');
+        }
 
-        // Refresh relevant data
-        if (sectionId === 'dashboard') loadDashboard();
-        if (sectionId === 'grievances') loadGrievances();
-        if (sectionId === 'purchase-orders') loadPurchaseOrders();
-        if (sectionId === 'vendor-bills') loadVendorBills();
-        if (sectionId === 'invoices') loadInvoices();
-        if (sectionId === 'ledger') loadLedger();
-        if (sectionId === 'financial-reports') loadFinancialReports();
-        if (sectionId === 'budget-reports') loadBudgetReports();
-        if (sectionId === 'masters') loadMasters();
-    }
-
-    // Format currency INR
-    function formatCurrency(val) {
-        const num = Number(val || 0);
-        return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-
-    // Format date string
-    function formatDate(dtStr) {
-        if (!dtStr) return '-';
-        const d = new Date(dtStr);
-        return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    // 1. LOAD DASHBOARD
-    async function loadDashboard() {
-        try {
-            const [grvRes, bsRes] = await Promise.all([
-                fetch(`${API_BASE}/grievances`).then(r => r.json()),
-                fetch(`${API_BASE}/reports/balance-sheet`).then(r => r.json())
-            ]);
-
-            cachedGrievances = grvRes;
-            document.getElementById('dashTotalGrievances').innerText = grvRes.length;
-            const escalatedCount = grvRes.filter(g => g.escalationStatus === 'ESCALATED').length;
-            document.getElementById('dashEscalatedGrievances').innerText = escalatedCount;
-
-            document.getElementById('dashTreasuryBalance').innerText = formatCurrency(bsRes.totalAssets);
-            document.getElementById('dashContractorPayables').innerText = formatCurrency(bsRes.totalLiabilities);
-
-            // Populate active grievances table
-            const tbody = document.getElementById('dashGrievanceTable');
-            tbody.innerHTML = '';
-            if (grvRes.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-muted">No grievances found.</td></tr>';
+        function renderTrackTable(grievances) {
+            const tbody = document.getElementById('trackTableBody');
+            if (grievances.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center py-3 text-muted">No grievances submitted yet.</td></tr>';
                 return;
             }
-
-            grvRes.forEach(g => {
-                const isEscalated = g.escalationStatus === 'ESCALATED';
-                const row = document.createElement('tr');
-                if (isEscalated) row.classList.add('table-danger');
-                row.innerHTML = `
+            tbody.innerHTML = grievances.map(g => `
+                <tr>
                     <td class="fw-bold">${g.ticketNumber}</td>
                     <td>${g.citizenName || '-'}</td>
-                    <td><span class="badge bg-light text-dark border">${g.departmentName || '-'}</span></td>
+                    <td>${g.departmentName || '-'}</td>
                     <td>
-                        <div class="fw-semibold">${g.title}</div>
-                        <small class="text-muted"><i class="fa-solid fa-location-dot"></i> ${g.location || '-'}</small>
+                        <strong>${g.title}</strong>
+                        <div class="small text-muted">${g.location || ''}</div>
                     </td>
                     <td>${formatDate(g.createdAt)}</td>
-                    <td><span class="badge bg-dark">${formatDate(g.slaDeadline)}</span></td>
+                    <td>${formatDate(g.slaDeadline)}</td>
+                    <td><span class="badge ${g.status === 'RESOLVED' ? 'bg-success' : 'bg-primary'}">${g.status}</span></td>
                     <td>
-                        <span class="badge ${g.status === 'RESOLVED' ? 'bg-success' : (g.status === 'IN_PROGRESS' ? 'bg-info' : 'bg-secondary')}">
-                            ${g.status}
+                        <span class="${g.escalationStatus === 'ESCALATED' ? 'badge-escalated' : 'badge-normal'}">
+                            ${g.escalationStatus}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderOfficerTable(grievances) {
+            const tbody = document.getElementById('officerTableBody');
+            if (grievances.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-3 text-muted">No complaints assigned.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = grievances.map(g => `
+                <tr class="${g.escalationStatus === 'ESCALATED' ? 'table-danger' : ''}">
+                    <td class="fw-bold">${g.ticketNumber}</td>
+                    <td>${g.departmentName || '-'}</td>
+                    <td>
+                        <strong>${g.title}</strong>
+                        <div class="small text-muted">${g.description || ''}</div>
+                    </td>
+                    <td>${formatDate(g.slaDeadline)}</td>
+                    <td><span class="badge ${g.status === 'RESOLVED' ? 'bg-success' : 'bg-secondary'}">${g.status}</span></td>
+                    <td>
+                        <span class="${g.escalationStatus === 'ESCALATED' ? 'badge-escalated' : 'badge-normal'}">
+                            ${g.escalationStatus}
                         </span>
                     </td>
                     <td>
-                        ${isEscalated ? '<span class="badge bg-danger badge-sla"><i class="fa-solid fa-triangle-exclamation"></i> 72H SLA EXPIRED</span>' : '<span class="badge bg-success">Within SLA</span>'}
-                    </td>
-                    <td>
                         ${g.status !== 'RESOLVED' ? `
-                            <button class="btn btn-sm btn-outline-success" onclick="resolveGrievance(${g.id})">
-                                <i class="fa-solid fa-check"></i> Resolve
-                            </button>
-                        ` : '<span class="text-success small fw-bold"><i class="fa-solid fa-circle-check"></i> Redressed</span>'}
+                            <button class="btn btn-sm btn-success" onclick="resolveGrievance(${g.id})">Mark Resolved</button>
+                        ` : '<span class="text-success fw-bold small">Resolved</span>'}
                     </td>
-                `;
-                tbody.appendChild(row);
+                </tr>
+            `).join('');
+        }
+
+        function renderPOTable(pos) {
+            const tbody = document.getElementById('poTableBody');
+            tbody.innerHTML = pos.map(po => `
+                <tr>
+                    <td class="fw-bold">${po.poNumber}</td>
+                    <td>${po.grievanceTicket || '-'}</td>
+                    <td>${po.contractorName}</td>
+                    <td>${po.departmentName}</td>
+                    <td class="fw-bold">${formatINR(po.amount)}</td>
+                    <td><span class="badge ${po.status === 'BILLED' ? 'bg-success' : 'bg-warning text-dark'}">${po.status}</span></td>
+                    <td>
+                        ${po.status === 'CONFIRMED' ? `
+                            <button class="btn btn-sm btn-outline-primary" onclick="convertToBill(${po.id})">Convert to Bill</button>
+                        ` : '<span class="text-muted small">Billed</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderBillsTable(bills) {
+            const tbody = document.getElementById('billsTableBody');
+            tbody.innerHTML = bills.map(b => `
+                <tr>
+                    <td class="fw-bold">${b.billNumber}</td>
+                    <td>${b.poNumber}</td>
+                    <td>${b.contractorName}</td>
+                    <td class="fw-bold">${formatINR(b.amount)}</td>
+                    <td><span class="badge ${b.status === 'PAID' ? 'bg-success' : 'bg-danger'}">${b.status}</span></td>
+                    <td>
+                        ${b.status !== 'PAID' ? `
+                            <button class="btn btn-sm btn-success" onclick="payBill(${b.id})">Pay via Bank</button>
+                        ` : '<span class="text-success fw-bold small">Disbursed</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderReports(bs, pnl, budget) {
+            document.getElementById('repTotalAssets').innerText = formatINR(bs.totalAssets);
+            document.getElementById('repTotalLiabilities').innerText = formatINR(bs.totalLiabilities);
+            document.getElementById('repNetEquity').innerText = formatINR(bs.netMunicipalEquity);
+
+            document.getElementById('repTotalIncome').innerText = formatINR(pnl.totalIncome);
+            document.getElementById('repTotalExpense').innerText = formatINR(pnl.totalExpenses);
+            document.getElementById('repNetSurplus').innerText = formatINR(pnl.netSurplusOrDeficit);
+
+            document.getElementById('deptBudgetBody').innerHTML = budget.map(b => `
+                <tr>
+                    <td><strong>${b.departmentName}</strong></td>
+                    <td>${b.headOfficer || '-'}</td>
+                    <td>${formatINR(b.allocatedBudget)}</td>
+                    <td class="text-danger">${formatINR(b.actualSpent)}</td>
+                    <td class="text-success">${formatINR(b.remainingBudget)}</td>
+                    <td>${b.budgetUtilizationPct}%</td>
+                    <td>${b.resolvedGrievances} / ${b.totalGrievances} (${b.escalatedGrievances} escalated)</td>
+                </tr>
+            `).join('');
+        }
+
+        // Form Submissions & Actions
+        document.getElementById('citizenForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                citizenId: parseInt(document.getElementById('citUserSelect').value),
+                departmentId: parseInt(document.getElementById('citDeptSelect').value),
+                productId: document.getElementById('citProductSelect').value ? parseInt(document.getElementById('citProductSelect').value) : null,
+                location: document.getElementById('citLocation').value,
+                title: document.getElementById('citTitle').value,
+                description: document.getElementById('citDesc').value
+            };
+            const res = await fetch(`${API_BASE}/grievances`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(r => r.json());
+            alert(`Grievance submitted successfully! Ticket: ${res.ticketNumber}`);
+            e.target.reset();
+            navigateTo('track');
+        });
+
+        document.getElementById('poCreateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                grievanceId: document.getElementById('poTicketSelect').value ? parseInt(document.getElementById('poTicketSelect').value) : null,
+                contractorId: parseInt(document.getElementById('poContractorSelect').value),
+                departmentId: parseInt(document.getElementById('poDeptSelect').value),
+                productId: document.getElementById('poItemSelect').value ? parseInt(document.getElementById('poItemSelect').value) : null,
+                amount: parseFloat(document.getElementById('poAmount').value)
+            };
+            const res = await fetch(`${API_BASE}/purchase-orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(r => r.json());
+            alert(`Purchase Order ${res.poNumber} issued!`);
+            e.target.reset();
+            loadAllData();
+        });
+
+        async function resolveGrievance(id) {
+            const notes = prompt('Enter resolution remarks:', 'Fixed on site by maintenance team.');
+            if (notes === null) return;
+            await fetch(`${API_BASE}/grievances/${id}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'RESOLVED', notes: notes })
             });
-        } catch (err) {
-            console.error(err);
+            loadAllData();
         }
-    }
 
-    // 2. LOAD GRIEVANCES
-    async function loadGrievances() {
-        const grvList = await fetch(`${API_BASE}/grievances`).then(r => r.json());
-        cachedGrievances = grvList;
-        const tbody = document.getElementById('allGrievancesTable');
-        tbody.innerHTML = '';
-        grvList.forEach(g => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="fw-bold text-primary">${g.ticketNumber}</td>
-                <td>${g.citizenName}</td>
-                <td>${g.departmentName}</td>
-                <td>${g.productName || 'General Civic'}</td>
-                <td>
-                    <div><strong>${g.title}</strong></div>
-                    <div class="small text-muted">${g.description || ''}</div>
-                    <div class="small text-secondary"><i class="fa-solid fa-map-pin"></i> ${g.location || ''}</div>
-                </td>
-                <td>${formatDate(g.slaDeadline)}</td>
-                <td><span class="badge ${g.status === 'RESOLVED' ? 'bg-success' : 'bg-primary'}">${g.status}</span></td>
-                <td>
-                    ${g.escalationStatus === 'ESCALATED' ? '<span class="badge bg-danger"><i class="fa-solid fa-triangle-exclamation"></i> ESCALATED</span>' : '<span class="badge bg-light text-dark border">NORMAL</span>'}
-                </td>
-                <td>
-                    ${g.status !== 'RESOLVED' ? `
-                        <div class="btn-group btn-group-sm">
-                            <button class="btn btn-outline-info" onclick="updateStatus(${g.id}, 'IN_PROGRESS')">In Progress</button>
-                            <button class="btn btn-outline-success" onclick="resolveGrievance(${g.id})">Resolve</button>
-                        </div>
-                    ` : `<span class="badge bg-success-subtle text-success">Resolved on ${formatDate(g.resolvedAt)}</span>`}
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    }
-
-    // 3. PURCHASE ORDERS
-    async function loadPurchaseOrders() {
-        const pos = await fetch(`${API_BASE}/purchase-orders`).then(r => r.json());
-        const tbody = document.getElementById('allPOTable');
-        tbody.innerHTML = '';
-        pos.forEach(po => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="fw-bold">${po.poNumber}</td>
-                <td><span class="badge bg-info-subtle text-dark">${po.grievanceTicket || 'Direct Issue'}</span></td>
-                <td>${po.contractorName}</td>
-                <td>${po.departmentName}</td>
-                <td>${po.productName || 'Civic Repair'}</td>
-                <td class="fw-bold">${formatCurrency(po.amount)}</td>
-                <td><span class="badge ${po.status === 'BILLED' ? 'bg-success' : 'bg-warning text-dark'}">${po.status}</span></td>
-                <td>
-                    ${po.status === 'CONFIRMED' ? `
-                        <button class="btn btn-sm btn-outline-primary" onclick="convertToBill(${po.id})">
-                            <i class="fa-solid fa-receipt"></i> Convert to Vendor Bill
-                        </button>
-                    ` : '<span class="text-muted small">Billed</span>'}
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    }
-
-    // 4. VENDOR BILLS
-    async function loadVendorBills() {
-        const bills = await fetch(`${API_BASE}/vendor-bills`).then(r => r.json());
-        const tbody = document.getElementById('allBillsTable');
-        tbody.innerHTML = '';
-        bills.forEach(b => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="fw-bold">${b.billNumber}</td>
-                <td>${b.poNumber}</td>
-                <td>${b.contractorName}</td>
-                <td class="fw-bold">${formatCurrency(b.amount)}</td>
-                <td><span class="badge ${b.status === 'PAID' ? 'bg-success' : 'bg-danger'}">${b.status}</span></td>
-                <td>${formatDate(b.createdAt)}</td>
-                <td>
-                    ${b.status !== 'PAID' ? `
-                        <button class="btn btn-sm btn-success" onclick="payBill(${b.id})">
-                            <i class="fa-solid fa-money-check-dollar"></i> Disburse via Bank
-                        </button>
-                    ` : '<span class="text-success small fw-bold"><i class="fa-solid fa-check-double"></i> Paid</span>'}
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    }
-
-    // 5. INVOICES
-    async function loadInvoices() {
-        const invs = await fetch(`${API_BASE}/invoices`).then(r => r.json());
-        const tbody = document.getElementById('allInvoicesTable');
-        tbody.innerHTML = '';
-        invs.forEach(inv => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="fw-bold">${inv.invoiceNumber}</td>
-                <td>${inv.citizenName}</td>
-                <td>${inv.departmentName}</td>
-                <td>${inv.feeType}</td>
-                <td class="fw-bold text-success">${formatCurrency(inv.amount)}</td>
-                <td><span class="badge ${inv.status === 'PAID' ? 'bg-success' : 'bg-warning text-dark'}">${inv.status}</span></td>
-                <td>
-                    ${inv.status !== 'PAID' ? `
-                        <button class="btn btn-sm btn-outline-success" onclick="payInvoice(${inv.id})">
-                            <i class="fa-solid fa-credit-card"></i> Collect Payment
-                        </button>
-                    ` : '<span class="text-success small fw-bold">Settled</span>'}
-                </td>
-            `;
-            tbody.appendChild(row);
-        });
-    }
-
-    // 6. LEDGER
-    async function loadLedger() {
-        const entries = await fetch(`${API_BASE}/journal-entries`).then(r => r.json());
-        const tbody = document.getElementById('journalEntriesTable');
-        tbody.innerHTML = '';
-        entries.forEach(e => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${formatDate(e.entryDate)}</td>
-                <td class="fw-bold">${e.entryNumber}</td>
-                <td><span class="badge bg-secondary-subtle text-dark">${e.journalName}</span></td>
-                <td><strong>${e.accountCode}</strong> - ${e.accountName}</td>
-                <td class="text-end fw-semibold ${e.debit > 0 ? 'text-primary' : 'text-muted'}">${e.debit > 0 ? formatCurrency(e.debit) : '-'}</td>
-                <td class="text-end fw-semibold ${e.credit > 0 ? 'text-success' : 'text-muted'}">${e.credit > 0 ? formatCurrency(e.credit) : '-'}</td>
-                <td><small class="badge bg-light text-dark border">${e.reference || '-'}</small></td>
-                <td>${e.description || '-'}</td>
-            `;
-            tbody.appendChild(row);
-        });
-    }
-
-    // 7. FINANCIAL REPORTS
-    async function loadFinancialReports() {
-        const [bs, pnl] = await Promise.all([
-            fetch(`${API_BASE}/reports/balance-sheet`).then(r => r.json()),
-            fetch(`${API_BASE}/reports/profit-and-loss`).then(r => r.json())
-        ]);
-
-        // Balance sheet
-        const assetsList = document.getElementById('bsAssetsList');
-        assetsList.innerHTML = bs.assetAccounts.map(a => `
-            <div class="d-flex justify-content-between py-1">
-                <span>${a.code} - ${a.name}</span>
-                <span class="fw-semibold">${formatCurrency(a.balance)}</span>
-            </div>
-        `).join('');
-        document.getElementById('bsTotalAssets').innerText = formatCurrency(bs.totalAssets);
-
-        const liabilitiesList = document.getElementById('bsLiabilitiesList');
-        liabilitiesList.innerHTML = bs.liabilityAccounts.map(l => `
-            <div class="d-flex justify-content-between py-1">
-                <span>${l.code} - ${l.name}</span>
-                <span class="fw-semibold">${formatCurrency(l.balance)}</span>
-            </div>
-        `).join('');
-        document.getElementById('bsTotalLiabilities').innerText = formatCurrency(bs.totalLiabilities);
-        document.getElementById('bsNetEquity').innerText = formatCurrency(bs.netMunicipalEquity);
-
-        // Profit & Loss
-        const incList = document.getElementById('pnlIncomeList');
-        incList.innerHTML = pnl.incomeItems.map(i => `
-            <div class="d-flex justify-content-between py-1">
-                <span>${i.code} - ${i.name}</span>
-                <span class="fw-semibold">${formatCurrency(i.balance)}</span>
-            </div>
-        `).join('');
-        document.getElementById('pnlTotalIncome').innerText = formatCurrency(pnl.totalIncome);
-
-        const expList = document.getElementById('pnlExpenseList');
-        expList.innerHTML = pnl.expenseItems.map(e => `
-            <div class="d-flex justify-content-between py-1">
-                <span>${e.code} - ${e.name}</span>
-                <span class="fw-semibold">${formatCurrency(e.balance)}</span>
-            </div>
-        `).join('');
-        document.getElementById('pnlTotalExpenses').innerText = formatCurrency(pnl.totalExpenses);
-        document.getElementById('pnlNetSurplus').innerText = formatCurrency(pnl.netSurplusOrDeficit);
-    }
-
-    // 8. BUDGET REPORTS
-    async function loadBudgetReports() {
-        const reports = await fetch(`${API_BASE}/reports/budget`).then(r => r.json());
-        const tbody = document.getElementById('budgetReportTable');
-        tbody.innerHTML = '';
-        reports.forEach(r => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td><strong>${r.departmentCode}</strong><br><small class="text-muted">${r.departmentName}</small></td>
-                <td>${r.headOfficer || '-'}</td>
-                <td class="fw-bold">${formatCurrency(r.allocatedBudget)}</td>
-                <td class="text-danger fw-bold">${formatCurrency(r.actualSpent)}</td>
-                <td class="text-success fw-bold">${formatCurrency(r.remainingBudget)}</td>
-                <td>
-                    <div class="progress" style="height: 18px;">
-                        <div class="progress-bar ${r.budgetUtilizationPct > 80 ? 'bg-danger' : 'bg-primary'}" role="progressbar" style="width: ${Math.min(r.budgetUtilizationPct, 100)}%;">
-                            ${r.budgetUtilizationPct}%
-                        </div>
-                    </div>
-                </td>
-                <td class="text-center"><span class="badge bg-secondary">${r.totalGrievances}</span></td>
-                <td class="text-center"><span class="badge bg-success">${r.resolvedGrievances}</span></td>
-                <td class="text-center"><span class="badge bg-danger">${r.escalatedGrievances}</span></td>
-            `;
-            tbody.appendChild(row);
-        });
-    }
-
-    // 9. MASTERS
-    async function loadMasters() {
-        const [contacts, prods, coa, depts] = await Promise.all([
-            fetch(`${API_BASE}/contacts`).then(r => r.json()),
-            fetch(`${API_BASE}/products`).then(r => r.json()),
-            fetch(`${API_BASE}/accounts`).then(r => r.json()),
-            fetch(`${API_BASE}/departments`).then(r => r.json())
-        ]);
-
-        cachedCitizens = contacts.filter(c => c.contactType === 'CITIZEN');
-        cachedContractors = contacts.filter(c => c.contactType === 'CONTRACTOR' || c.contactType === 'UTILITY');
-        cachedDepartments = depts;
-        cachedProducts = prods;
-
-        // Populate Contact table
-        const cBody = document.getElementById('contactMasterTable');
-        cBody.innerHTML = contacts.map(c => `
-            <tr>
-                <td><strong>${c.name}</strong></td>
-                <td><span class="badge ${c.contactType === 'CITIZEN' ? 'bg-info' : 'bg-warning text-dark'}">${c.contactType}</span></td>
-                <td>${c.phone || c.email || '-'}</td>
-                <td><small>${c.address || '-'}</small></td>
-            </tr>
-        `).join('');
-
-        // Populate Product table
-        const pBody = document.getElementById('productMasterTable');
-        pBody.innerHTML = prods.map(p => `
-            <tr>
-                <td><strong>${p.name}</strong></td>
-                <td><span class="badge bg-secondary">${p.productType}</span></td>
-                <td>${formatCurrency(p.standardRate)}</td>
-                <td>${p.departmentName || '-'}</td>
-            </tr>
-        `).join('');
-
-        // Populate CoA table
-        const aBody = document.getElementById('coaMasterTable');
-        aBody.innerHTML = coa.map(a => `
-            <tr>
-                <td><strong>${a.code}</strong></td>
-                <td>${a.name}</td>
-                <td><span class="badge bg-light text-dark border">${a.accountType}</span></td>
-                <td class="fw-bold">${formatCurrency(a.balance)}</td>
-            </tr>
-        `).join('');
-
-        // Populate Dept table
-        const dBody = document.getElementById('deptMasterTable');
-        dBody.innerHTML = depts.map(d => `
-            <tr>
-                <td><strong>${d.code}</strong></td>
-                <td>${d.name}</td>
-                <td>${d.headOfficer || '-'}</td>
-                <td class="fw-bold">${formatCurrency(d.allocatedBudget)}</td>
-            </tr>
-        `).join('');
-
-        populateDropdowns();
-    }
-
-    function populateDropdowns() {
-        // Grievance modal dropdowns
-        const grvCit = document.getElementById('grvCitizenSelect');
-        grvCit.innerHTML = cachedCitizens.map(c => `<option value="${c.id}">${c.name} (${c.phone || c.email})</option>`).join('');
-
-        const grvDept = document.getElementById('grvDeptSelect');
-        grvDept.innerHTML = cachedDepartments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-
-        const grvProd = document.getElementById('grvProductSelect');
-        grvProd.innerHTML = '<option value="">-- Optional Category --</option>' + cachedProducts.map(p => `<option value="${p.id}">${p.name} (${p.productType})</option>`).join('');
-
-        // PO modal dropdowns
-        const poGrv = document.getElementById('poGrievanceSelect');
-        poGrv.innerHTML = '<option value="">-- Select Grievance Ticket --</option>' + cachedGrievances.map(g => `<option value="${g.id}">[${g.ticketNumber}] ${g.title}</option>`).join('');
-
-        const poCont = document.getElementById('poContractorSelect');
-        poCont.innerHTML = cachedContractors.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-
-        const poDept = document.getElementById('poDeptSelect');
-        poDept.innerHTML = cachedDepartments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-
-        const poProd = document.getElementById('poProductSelect');
-        poProd.innerHTML = '<option value="">-- Select Work Item --</option>' + cachedProducts.map(p => `<option value="${p.id}" data-rate="${p.standardRate}">${p.name}</option>`).join('');
-
-        // Invoice modal dropdowns
-        const invCit = document.getElementById('invCitizenSelect');
-        invCit.innerHTML = cachedCitizens.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-
-        const invDept = document.getElementById('invDeptSelect');
-        invDept.innerHTML = cachedDepartments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-
-        // Product creation modal dept dropdown
-        const pDept = document.getElementById('prodDeptSelect');
-        pDept.innerHTML = '<option value="">-- No Department --</option>' + cachedDepartments.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
-    }
-
-    function autoFillRate() {
-        const sel = document.getElementById('poProductSelect');
-        const opt = sel.options[sel.selectedIndex];
-        if (opt && opt.dataset.rate) {
-            document.getElementById('poAmount').value = opt.dataset.rate;
+        async function convertToBill(poId) {
+            await fetch(`${API_BASE}/purchase-orders/${poId}/convert-to-bill`, { method: 'POST' });
+            alert('Converted to Vendor Bill & Expense Ledger Posted!');
+            loadAllData();
         }
-    }
 
-    // ACTIONS
-    async function triggerSlaEngine() {
-        const res = await fetch(`${API_BASE}/grievances/escalate-check`, { method: 'POST' }).then(r => r.json());
-        alert(res.message);
-        loadDashboard();
-    }
+        async function payBill(billId) {
+            await fetch(`${API_BASE}/vendor-bills/${billId}/pay`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paymentMethod: 'Bank Transfer' })
+            });
+            alert('Payment disbursed via Treasury Bank!');
+            loadAllData();
+        }
 
-    async function updateStatus(id, status) {
-        await fetch(`${API_BASE}/grievances/${id}/status`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: status, notes: 'Status progressed by department officer' })
+        async function runSlaCheck() {
+            const res = await fetch(`${API_BASE}/grievances/escalate-check`, { method: 'POST' }).then(r => r.json());
+            alert(res.message);
+            loadAllData();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAllData();
         });
-        loadGrievances();
-        loadDashboard();
-    }
-
-    async function resolveGrievance(id) {
-        const notes = prompt('Enter resolution remarks / work completion summary:', 'Repairs completed by civil works team.');
-        if (notes === null) return;
-        await fetch(`${API_BASE}/grievances/${id}/status`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'RESOLVED', notes: notes })
-        });
-        alert('Grievance marked as RESOLVED.');
-        loadDashboard();
-        loadGrievances();
-    }
-
-    async function convertToBill(poId) {
-        if (!confirm('Convert this confirmed Purchase Order to a Vendor Bill and post expenditure to ledgers?')) return;
-        const res = await fetch(`${API_BASE}/purchase-orders/${poId}/convert-to-bill`, { method: 'POST' }).then(r => r.json());
-        alert(res.message);
-        loadPurchaseOrders();
-        loadVendorBills();
-        loadDashboard();
-    }
-
-    async function payBill(billId) {
-        if (!confirm('Disburse payment to contractor from Municipal Treasury Bank Fund?')) return;
-        const res = await fetch(`${API_BASE}/vendor-bills/${billId}/pay`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ paymentMethod: 'Bank Transfer' })
-        }).then(r => r.json());
-        alert(res.message);
-        loadVendorBills();
-        loadDashboard();
-    }
-
-    async function payInvoice(invoiceId) {
-        if (!confirm('Collect and deposit civic permit fee payment into Treasury Bank?')) return;
-        const res = await fetch(`${API_BASE}/invoices/${invoiceId}/pay`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ paymentMethod: 'Online Gateway' })
-        }).then(r => r.json());
-        alert(res.message);
-        loadInvoices();
-        loadDashboard();
-    }
-
-    // FORM HANDLERS
-    document.getElementById('grievanceForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const payload = {
-            citizenId: parseInt(document.getElementById('grvCitizenSelect').value),
-            departmentId: parseInt(document.getElementById('grvDeptSelect').value),
-            productId: document.getElementById('grvProductSelect').value ? parseInt(document.getElementById('grvProductSelect').value) : null,
-            title: document.getElementById('grvTitle').value,
-            location: document.getElementById('grvLocation').value,
-            description: document.getElementById('grvDesc').value
-        };
-        const res = await fetch(`${API_BASE}/grievances`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).then(r => r.json());
-        bootstrap.Modal.getInstance(document.getElementById('newGrievanceModal')).hide();
-        e.target.reset();
-        alert(`Grievance Lodged! Ticket: ${res.ticketNumber}`);
-        loadDashboard();
-    });
-
-    document.getElementById('poForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const payload = {
-            grievanceId: document.getElementById('poGrievanceSelect').value ? parseInt(document.getElementById('poGrievanceSelect').value) : null,
-            contractorId: parseInt(document.getElementById('poContractorSelect').value),
-            departmentId: parseInt(document.getElementById('poDeptSelect').value),
-            productId: document.getElementById('poProductSelect').value ? parseInt(document.getElementById('poProductSelect').value) : null,
-            amount: parseFloat(document.getElementById('poAmount').value)
-        };
-        const res = await fetch(`${API_BASE}/purchase-orders`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).then(r => r.json());
-        bootstrap.Modal.getInstance(document.getElementById('newPOModal')).hide();
-        e.target.reset();
-        alert(`Purchase Order ${res.poNumber} issued successfully!`);
-        loadPurchaseOrders();
-        loadDashboard();
-    });
-
-    document.getElementById('invoiceForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const payload = {
-            citizenId: parseInt(document.getElementById('invCitizenSelect').value),
-            departmentId: parseInt(document.getElementById('invDeptSelect').value),
-            feeType: document.getElementById('invFeeType').value,
-            amount: parseFloat(document.getElementById('invAmount').value)
-        };
-        const res = await fetch(`${API_BASE}/invoices`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).then(r => r.json());
-        bootstrap.Modal.getInstance(document.getElementById('newInvoiceModal')).hide();
-        e.target.reset();
-        alert(`Invoice ${res.invoiceNumber} created!`);
-        loadInvoices();
-    });
-
-    document.getElementById('contactForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const payload = {
-            name: document.getElementById('cntName').value,
-            contactType: document.getElementById('cntType').value,
-            email: document.getElementById('cntEmail').value,
-            phone: document.getElementById('cntPhone').value,
-            address: document.getElementById('cntAddress').value
-        };
-        await fetch(`${API_BASE}/contacts`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        bootstrap.Modal.getInstance(document.getElementById('newContactModal')).hide();
-        e.target.reset();
-        loadMasters();
-    });
-
-    document.getElementById('productForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const payload = {
-            name: document.getElementById('prodName').value,
-            productType: document.getElementById('prodType').value,
-            standardRate: parseFloat(document.getElementById('prodRate').value),
-            departmentId: document.getElementById('prodDeptSelect').value ? parseInt(document.getElementById('prodDeptSelect').value) : null
-        };
-        await fetch(`${API_BASE}/products`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        bootstrap.Modal.getInstance(document.getElementById('newProductModal')).hide();
-        e.target.reset();
-        loadMasters();
-    });
-
-    document.getElementById('deptForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const payload = {
-            name: document.getElementById('deptName').value,
-            code: document.getElementById('deptCode').value,
-            headOfficer: document.getElementById('deptHead').value,
-            allocatedBudget: parseFloat(document.getElementById('deptBudget').value)
-        };
-        await fetch(`${API_BASE}/departments`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        bootstrap.Modal.getInstance(document.getElementById('newDeptModal')).hide();
-        e.target.reset();
-        loadMasters();
-    });
-
-    // Initial load
-    window.addEventListener('DOMContentLoaded', () => {
-        loadMasters();
-        loadDashboard();
-    });
-</script>
+    </script>
 </body>
 </html>
